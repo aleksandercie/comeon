@@ -7,6 +7,7 @@ import Button from './components/Button/Button';
 import Header from './components/Header/Header';
 import Player from './components/Player/Player';
 import Categories from './components/Categories/Categories';
+import Games from './components/Games/Games';
 
 function App() {
   return (
@@ -67,30 +68,7 @@ function App() {
           <div className="ui grid">
             <div className="twelve wide column">
               <Header title="Games" />
-              <div className="ui relaxed divided game items links">
-                {/* game item template */}
-                <div className="game item">
-                  <div className="ui small image">
-                    <img src="" alt="game-icon" />
-                  </div>
-                  <div className="content">
-                    <div className="header">
-                      <b className="name"></b>
-                    </div>
-                    <div className="description"></div>
-                    <div className="extra">
-                      <Button
-                        float="right"
-                        type="button"
-                        icon={<i className="right chevron icon" />}
-                        name="Play"
-                        classname="play"
-                      />
-                    </div>
-                  </div>
-                </div>
-                {/* end game item template */}
-              </div>
+              <Games />
             </div>
             <div className="four wide column">
               <Header title="Categories" />
