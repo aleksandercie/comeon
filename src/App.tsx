@@ -5,6 +5,7 @@ import './App.css';
 import InputWrapper from './components/InputWrapper/InputWrapper';
 import Button from './components/Button/Button';
 import Header from './components/Header/Header';
+import Player from './components/Player/Player';
 
 function App() {
   return (
@@ -45,17 +46,7 @@ function App() {
           <div className="ui grid centered">
             <div className="twelve wide column">
               <div className="ui list">
-                {/* player item template */}
-                <div className="player item">
-                  <img className="ui avatar image" src="" alt="avatar" />
-                  <div className="content">
-                    <div className="header">
-                      <b className="name"></b>
-                    </div>
-                    <div className="description event"></div>
-                  </div>
-                </div>
-                {/* end player item template */}
+                <Player />
               </div>
               <Button
                 float="left"
