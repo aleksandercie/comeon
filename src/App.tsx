@@ -2,6 +2,7 @@ import logo from './images/logo.svg';
 
 import './semantic.css';
 import './App.css';
+import InputWrapper from './components/InputWrapper/InputWrapper';
 
 function App() {
   return (
@@ -16,22 +17,18 @@ function App() {
           <div className="ui grid centered">
             <form>
               <div className="fields">
-                <div className="required field">
-                  <div className="ui icon input">
-                    <input type="text" name="username" placeholder="Username" />
-                    <i className="user icon"></i>
-                  </div>
-                </div>
-                <div className="required field">
-                  <div className="ui icon input">
-                    <input
-                      type="password"
-                      name="password"
-                      placeholder="Password"
-                    />
-                    <i className="lock icon"></i>
-                  </div>
-                </div>
+                <InputWrapper required>
+                  <input type="text" name="username" placeholder="Username" />
+                  <i className="user icon" />
+                </InputWrapper>
+                <InputWrapper required>
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                  />
+                  <i className="lock icon" />
+                </InputWrapper>
                 <div className="field">
                   <div className="ui icon input">
                     <input type="submit" value="Login" />
@@ -63,10 +60,10 @@ function App() {
               </div>
             </div>
             <div className="four wide column">
-              <div className="search ui small icon input ">
+              <InputWrapper required={false}>
                 <input type="text" placeholder="Search Game" />
-                <i className="search icon"></i>
-              </div>
+                <i className="search icon" />
+              </InputWrapper>
             </div>
           </div>
           <div className="ui grid">
