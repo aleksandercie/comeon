@@ -4,6 +4,7 @@ import './semantic.css';
 import './App.css';
 import InputWrapper from './components/InputWrapper/InputWrapper';
 import Button from './components/Button/Button';
+import Header from './components/Header/Header';
 
 function App() {
   return (
@@ -73,7 +74,7 @@ function App() {
           </div>
           <div className="ui grid">
             <div className="twelve wide column">
-              <h3 className="ui dividing header">Games</h3>
+              <Header title="Games" />
               <div className="ui relaxed divided game items links">
                 {/* game item template */}
                 <div className="game item">
@@ -100,7 +101,7 @@ function App() {
               </div>
             </div>
             <div className="four wide column">
-              <h3 className="ui dividing header">Categories</h3>
+              <Header title="Categories" />
               <div className="ui selection animated list category items">
                 {/* category item template */}
                 <div className="category item">
