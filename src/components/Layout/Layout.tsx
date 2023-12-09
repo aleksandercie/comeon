@@ -11,7 +11,7 @@ const Layout = ({ children }: LayoutType) => {
           <img src={logo} alt="logo" />
         </div>
       </div>
-      {children}
+      <div className="main container">{children}</div>
     </>
   );
 };
