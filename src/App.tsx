@@ -3,6 +3,7 @@ import logo from './images/logo.svg';
 import './semantic.css';
 import './App.css';
 import InputWrapper from './components/InputWrapper/InputWrapper';
+import Button from './components/Button/Button';
 
 function App() {
   return (
@@ -55,9 +56,13 @@ function App() {
                 </div>
                 {/* end player item template */}
               </div>
-              <div className="logout ui left floated secondary button inverted">
-                <i className="left chevron icon"></i>Log Out
-              </div>
+              <Button
+                float="left"
+                type="button"
+                icon={<i className="left chevron icon" />}
+                name="Log Out"
+                classname="logout"
+              />
             </div>
             <div className="four wide column">
               <InputWrapper required={false}>
@@ -81,10 +86,13 @@ function App() {
                     </div>
                     <div className="description"></div>
                     <div className="extra">
-                      <div className="play ui right floated secondary button inverted">
-                        Play
-                        <i className="right chevron icon"></i>
-                      </div>
+                      <Button
+                        float="right"
+                        type="button"
+                        icon={<i className="right chevron icon" />}
+                        name="Play"
+                        classname="play"
+                      />
                     </div>
                   </div>
                 </div>
@@ -108,9 +116,12 @@ function App() {
         <div className="ingame">
           <div className="ui grid centered">
             <div className="three wide column">
-              <div className="ui right floated secondary button inverted">
-                <i className="left chevron icon"></i>Back
-              </div>
+              <Button
+                float="left"
+                type="button"
+                icon={<i className="left chevron icon" />}
+                name="Back"
+              />
             </div>
             <div className="ten wide column">
               <div id="game-launch"></div>
