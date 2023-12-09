@@ -6,6 +6,7 @@ import InputWrapper from './components/InputWrapper/InputWrapper';
 import Button from './components/Button/Button';
 import Header from './components/Header/Header';
 import Player from './components/Player/Player';
+import Categories from './components/Categories/Categories';
 
 function App() {
   return (
@@ -93,15 +94,7 @@ function App() {
             </div>
             <div className="four wide column">
               <Header title="Categories" />
-              <div className="ui selection animated list category items">
-                {/* category item template */}
-                <div className="category item">
-                  <div className="content">
-                    <div className="header"></div>
-                  </div>
-                </div>
-                {/* end category item template */}
-              </div>
+              <Categories />
             </div>
           </div>
         </div>
