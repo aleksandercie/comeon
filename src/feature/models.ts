@@ -36,6 +36,7 @@ export type AuthType = {
     name: string;
     avatar: string;
     event: string;
+    login: string;
   };
 };
 

@@ -6,8 +6,18 @@ import Header from '../components/Header/Header';
 import InputWrapper from '../components/InputWrapper/InputWrapper';
 import Layout from '../components/Layout/Layout';
 import Player from '../components/Player/Player';
+import { useAppDispatch } from '../store/store';
+import { logoutAsync } from '../feature/authSlice';
+import { useNavigate } from 'react-router-dom';
+import { AuthType } from '../feature/models';
 
-const Dashboard = () => {
+type DashboardType = {
+  data: null | AuthType;
+};
+
+const Dashboard = ({ data }: DashboardType) => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState(0);
   const [searchValue, setSearchValue] = useState('');
   const [isLaunchGame, setIsLaunchGame] = useState(false);
@@ -15,6 +25,16 @@ const Dashboard = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setSearchValue(e.target.value);
   const handleClick = () => setIsLaunchGame(false);
+
+  const handleLogout = () => {
+    if (data && data.player) {
+      dispatch(logoutAsync(data.player?.login));
+      navigate('/');
+    }
+  };
+
+  const renderPlayer =
+    data && data.player ? <Player player={data.player} /> : null;
 
   return (
     <Layout>
@@ -43,15 +63,14 @@ const Dashboard = () => {
           <div className="casino">
             <div className="ui grid centered">
               <div className="twelve wide column">
-                <div className="ui list">
-                  <Player />
-                </div>
+                <div className="ui list">{renderPlayer}</div>
                 <Button
                   float="left"
                   type="button"
                   icon={<i className="left chevron icon" />}
                   name="Log Out"
                   classname="logout"
+                  onClick={handleLogout}
                 />
               </div>
               <div className="four wide column">

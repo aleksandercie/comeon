@@ -27,28 +27,31 @@ export const loginAsync = createAsyncThunk(
     }
 
     const jsonData = await response.json();
-    return jsonData;
+    return { ...jsonData, login: username };
   }
 );
 
-export const logoutAsync = createAsyncThunk('auth/logout', async (username) => {
-  const response = await fetch('http://localhost:3001/logout', {
-    method: 'post',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      username,
-    }),
-  });
+export const logoutAsync = createAsyncThunk(
+  'auth/logout',
+  async (username: string) => {
+    const response = await fetch('http://localhost:3001/logout', {
+      method: 'post',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username,
+      }),
+    });
 
-  if (!response.ok) {
-    throw new Error('Logout failed');
+    if (!response.ok) {
+      throw new Error('Logout failed');
+    }
+
+    return null;
   }
-
-  return null;
-});
+);
 
 const authSlice = createSlice({
   name: 'auth',

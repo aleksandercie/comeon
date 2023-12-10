@@ -1,11 +1,12 @@
 import { Navigate, Outlet } from 'react-router-dom';
+import { AuthType } from '../../feature/models';
 
-type ProtectedRouteProps = {
-  user: boolean;
-};
+interface ProtectedRouteProps {
+  data: AuthType | null;
+}
 
-const ProtectedRoute = ({ user }: ProtectedRouteProps) => {
-  return user ? <Outlet /> : <Navigate to="/" />;
+const ProtectedRoute = ({ data }: ProtectedRouteProps) => {
+  return data && data.player ? <Outlet /> : <Navigate to="/" />;
 };
 
 export default ProtectedRoute;

@@ -1,21 +1,19 @@
-import { useSelector } from 'react-redux';
-import { selectAuth } from '../../feature/authSlice';
+import { AuthType } from '../../feature/models';
 
-const Player = () => {
-  const { data } = useSelector(selectAuth);
-  const player = data?.player;
+const Player = ({ player }: Pick<AuthType, 'player'>) => {
+  const { avatar, name, event } = player;
 
-  return player ? (
+  return (
     <div className="player item">
-      <img className="ui avatar image" src={player.avatar} alt="avatar" />
+      <img className="ui avatar image" src={avatar} alt="avatar" />
       <div className="content">
         <div className="header">
-          <b className="name">{player.name}</b>
+          <b className="name">{name}</b>
         </div>
-        <div className="description event">{player.event}</div>
+        <div className="description event">{event}</div>
       </div>
     </div>
-  ) : null;
+  );
 };
 
 export default Player;
