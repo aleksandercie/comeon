@@ -8,9 +8,19 @@ import { GameType } from '../../feature/models';
 type GamesType = {
   activeCategory: number;
   searchValue: string;
+  setIsLaunchGame: React.Dispatch<React.SetStateAction<boolean>>;
 };
+declare global {
+  interface Window {
+    comeon: {
+      game: {
+        launch: (name: string) => void;
+      };
+    };
+  }
+}
 
-const Games = ({ activeCategory, searchValue }: GamesType) => {
+const Games = ({ activeCategory, searchValue, setIsLaunchGame }: GamesType) => {
   const dispatch = useAppDispatch();
   const { data: games } = useSelector(selectGames);
   const filteredGames = (games || []).reduce((acc, item) => {
@@ -22,10 +32,28 @@ const Games = ({ activeCategory, searchValue }: GamesType) => {
     }
     return acc;
   }, [] as GameType[]);
+  const handleClick = (code: string) => () => {
+    if (window) {
+      setIsLaunchGame(true);
+      window.comeon.game.launch(code);
+    }
+  };
 
   useEffect(() => {
     dispatch(fetchGamesData());
   }, [dispatch]);
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'lib/comeon.game-1.1.min.js';
+    script.async = true;
+
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   return (
     <div className="ui relaxed divided game items links">
@@ -45,6 +73,7 @@ const Games = ({ activeCategory, searchValue }: GamesType) => {
                   float="right"
                   type="button"
                   icon={<i className="right chevron icon" />}
+                  onClick={handleClick(code)}
                   name="Play"
                   classname="play"
                 />

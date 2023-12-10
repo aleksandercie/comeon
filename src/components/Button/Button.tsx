@@ -3,10 +3,18 @@ type ButtonType = {
   type: 'button';
   icon: JSX.Element;
   name: string;
+  onClick?: () => void;
   classname?: string;
 };
 
-const Button = ({ float, type, icon, name, classname }: ButtonType) => {
+const Button = ({
+  float,
+  type,
+  icon,
+  name,
+  onClick,
+  classname,
+}: ButtonType) => {
   const isRight = float === 'right';
 
   return (
@@ -15,6 +23,7 @@ const Button = ({ float, type, icon, name, classname }: ButtonType) => {
         classname ? classname : ''
       } ui ${float} floated secondary button inverted `}
       type={type}
+      onClick={onClick}
     >
       {isRight ? (
         <>
