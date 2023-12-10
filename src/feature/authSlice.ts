@@ -22,12 +22,13 @@ export const loginAsync = createAsyncThunk(
       }),
     });
 
+    const jsonData = await response.json();
+
     if (!response.ok) {
-      throw new Error('Login failed');
+      throw new Error(jsonData.error);
     }
 
-    const jsonData = await response.json();
-    return { ...jsonData, login: username };
+    return { ...jsonData, player: { ...jsonData.player, login: username } };
   }
 );
 
@@ -45,8 +46,10 @@ export const logoutAsync = createAsyncThunk(
       }),
     });
 
+    const jsonData = await response.json();
+
     if (!response.ok) {
-      throw new Error('Logout failed');
+      throw new Error(jsonData.error);
     }
 
     return null;
@@ -66,9 +69,9 @@ const authSlice = createSlice({
         state.loading = false;
         state.data = action.payload;
       })
-      .addCase(loginAsync.rejected, (state) => {
+      .addCase(loginAsync.rejected, (state, action) => {
         state.loading = false;
-        state.error = 'Error occurred';
+        state.error = action.error.message || 'Error occurred';
       })
       .addCase(logoutAsync.pending, (state) => {
         state.loading = true;
@@ -77,9 +80,9 @@ const authSlice = createSlice({
         state.loading = false;
         state.data = action.payload;
       })
-      .addCase(logoutAsync.rejected, (state) => {
+      .addCase(logoutAsync.rejected, (state, action) => {
         state.loading = false;
-        state.error = 'Error occurred';
+        state.error = action.error.message || 'Error occurred';
       });
   },
 });

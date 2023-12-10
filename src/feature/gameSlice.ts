@@ -30,10 +30,6 @@ export const gamesSlice = createSlice({
       .addCase(fetchGamesData.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload;
-      })
-      .addCase(fetchGamesData.rejected, (state) => {
-        state.loading = false;
-        state.error = 'Error occurred';
       });
   },
 });

@@ -1,6 +1,7 @@
 body {
   background-color: #444;
 }
+
 .main.container {
   background-color: #FFFFFF;
   margin: 0 auto;
@@ -14,4 +15,9 @@ body {
 
 .search {
   float: right;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
 }
