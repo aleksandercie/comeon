@@ -9,6 +9,10 @@ import Player from '../components/Player/Player';
 
 const Dashboard = () => {
   const [activeCategory, setActiveCategory] = useState(0);
+  const [searchValue, setSearchValue] = useState('');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setSearchValue(e.target.value);
 
   return (
     <Layout>
@@ -29,7 +33,12 @@ const Dashboard = () => {
             </div>
             <div className="four wide column">
               <InputWrapper required={false}>
-                <input type="text" placeholder="Search Game" />
+                <input
+                  type="text"
+                  placeholder="Search Game"
+                  value={searchValue}
+                  onChange={handleChange}
+                />
                 <i className="search icon" />
               </InputWrapper>
             </div>
@@ -37,7 +46,10 @@ const Dashboard = () => {
           <div className="ui grid">
             <div className="twelve wide column">
               <Header title="Games" />
-              <Games activeCategory={activeCategory} />
+              <Games
+                activeCategory={activeCategory}
+                searchValue={searchValue}
+              />
             </div>
             <div className="four wide column">
               <Header title="Categories" />
