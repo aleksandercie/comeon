@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import gamesReducer from '../feature/gameSlice';
+import categoriesReducer from '../feature/categoriesSlice';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 const store = configureStore({
   reducer: {
     games: gamesReducer,
+    categories: categoriesReducer,
   },
 });
 export default store;

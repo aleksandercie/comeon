@@ -1,19 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { StateType } from './models';
-
-export type GameType = {
-  name: string;
-  categoryIds: number[];
-  code: string;
-  description: string;
-  icon: string;
-};
-
-export type GamesSliceType = {
-  data: null | GameType[];
-  loading: boolean;
-  error: null | string;
-};
+import { GamesSliceType, StateType } from './models';
 
 const initialState: GamesSliceType = {
   data: null,

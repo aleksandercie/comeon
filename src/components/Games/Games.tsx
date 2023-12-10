@@ -6,8 +6,7 @@ import { useAppDispatch } from '../../store/store';
 
 const Games = () => {
   const dispatch = useAppDispatch();
-  const { data: games, loading, error } = useSelector(selectGames);
-  console.log(loading, error, games);
+  const { data: games } = useSelector(selectGames);
 
   useEffect(() => {
     dispatch(fetchGamesData());
