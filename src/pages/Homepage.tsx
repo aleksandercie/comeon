@@ -4,11 +4,13 @@ import Layout from '../components/Layout/Layout';
 import { useSelector } from 'react-redux';
 import { loginAsync, selectAuth } from '../feature/authSlice';
 import { useAppDispatch } from '../store/store';
+import { useNavigate } from 'react-router-dom';
 
 type InputType = 'username' | 'password';
 
 const Homepage = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const auth = useSelector(selectAuth);
   console.log(auth);
   const [loginValues, setLoginValues] = useState({
@@ -28,6 +30,7 @@ const Homepage = () => {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(loginAsync(loginValues));
+    navigate('/dashboard');
   };
 
   return (

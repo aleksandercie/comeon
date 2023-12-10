@@ -22,7 +22,7 @@ export type CategoriesSliceType = SliceType & {
 export type StateType = {
   games: GamesSliceType;
   categories: CategoriesSliceType;
-  auth: AuthType;
+  auth: AuthSliceType;
 };
 
 export type SliceType = {
