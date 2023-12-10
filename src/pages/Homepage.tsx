@@ -11,7 +11,7 @@ type InputType = 'username' | 'password';
 const Homepage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const authError = useSelector(selectAuth).error;
+  const { error, loading } = useSelector(selectAuth);
 
   const [loginValues, setLoginValues] = useState({
     username: '',
@@ -33,15 +33,16 @@ const Homepage = () => {
     navigate('/dashboard');
   };
 
-  const disabled = loginValues.username === '' || loginValues.password === '';
+  const disabled =
+    loginValues.username === '' || loginValues.password === '' || loading;
 
   return (
     <Layout>
       <>
         <div className="login">
-          {authError && (
+          {error && (
             <div className="ui centered error message">
-              {authError.toUpperCase()}
+              {error.toUpperCase()}
             </div>
           )}
           <div className="ui grid centered">

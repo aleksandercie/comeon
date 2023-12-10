@@ -22,7 +22,7 @@ declare global {
 
 const Games = ({ activeCategory, searchValue, setIsLaunchGame }: GamesType) => {
   const dispatch = useAppDispatch();
-  const { data: games } = useSelector(selectGames);
+  const { data: games, loading } = useSelector(selectGames);
   const filteredGames = (games || []).reduce((acc, item) => {
     if (
       item.categoryIds.includes(activeCategory) &&
@@ -55,13 +55,19 @@ const Games = ({ activeCategory, searchValue, setIsLaunchGame }: GamesType) => {
     };
   }, []);
 
+  if (loading) {
+    return (
+      <div className="ui relaxed divided game items links">Loading...</div>
+    );
+  }
+
   return (
     <div className="ui relaxed divided game items links">
       {filteredGames.length > 0 ? (
         filteredGames?.map(({ name, icon, description, code }) => (
           <div className="game item" key={code}>
             <div className="ui small image">
-              <img src={icon} alt="game-icon" />
+              <img src={icon} alt="game-icon" loading="lazy" />
             </div>
             <div className="content">
               <div className="header">

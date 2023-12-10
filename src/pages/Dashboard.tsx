@@ -10,6 +10,7 @@ import { useAppDispatch } from '../store/store';
 import { logoutAsync } from '../feature/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { AuthType } from '../feature/models';
+import useWindowWidth from '../hooks/useWindowWidth';
 
 type DashboardType = {
   data: null | AuthType;
@@ -18,6 +19,7 @@ type DashboardType = {
 const Dashboard = ({ data }: DashboardType) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const isMobile = useWindowWidth();
   const [activeCategory, setActiveCategory] = useState(0);
   const [searchValue, setSearchValue] = useState('');
   const [isLaunchGame, setIsLaunchGame] = useState(false);
@@ -36,6 +38,13 @@ const Dashboard = ({ data }: DashboardType) => {
   const renderPlayer =
     data && data.player ? <Player player={data.player} /> : null;
 
+  const rendercategories = (
+    <>
+      <Header title="Categories" />
+      <Categories setActiveCategory={setActiveCategory} />
+    </>
+  );
+
   return (
     <Layout>
       <>
@@ -44,7 +53,9 @@ const Dashboard = ({ data }: DashboardType) => {
           style={{ display: `${isLaunchGame ? 'block' : 'none'}` }}
         >
           <div className="ui grid centered">
-            <div className="three wide column">
+            <div
+              className={`${isMobile ? 'sixteen mobile' : 'three'} wide column`}
+            >
               <Button
                 float="left"
                 type="button"
@@ -53,7 +64,11 @@ const Dashboard = ({ data }: DashboardType) => {
                 onClick={handleClick}
               />
             </div>
-            <div className="ten wide column">
+            <div
+              className={`${
+                isMobile ? 'sixteen mobile' : 'thirteen'
+              } wide column`}
+            >
               <div id="game-launch"></div>
             </div>
             <div className="three wide column"></div>
@@ -62,7 +77,11 @@ const Dashboard = ({ data }: DashboardType) => {
         {isLaunchGame ? null : (
           <div className="casino">
             <div className="ui grid centered">
-              <div className="twelve wide column">
+              <div
+                className={`${
+                  isMobile ? 'sixteen mobile' : 'twelve'
+                } wide column`}
+              >
                 <div className="ui list">{renderPlayer}</div>
                 <Button
                   float="left"
@@ -73,8 +92,12 @@ const Dashboard = ({ data }: DashboardType) => {
                   onClick={handleLogout}
                 />
               </div>
-              <div className="four wide column">
-                <InputWrapper required={false}>
+              <div
+                className={`${
+                  isMobile ? 'sixteen mobile' : 'four'
+                } wide column`}
+              >
+                <InputWrapper required={false} isMobile={isMobile}>
                   <input
                     type="text"
                     placeholder="Search Game"
@@ -86,7 +109,16 @@ const Dashboard = ({ data }: DashboardType) => {
               </div>
             </div>
             <div className="ui grid">
-              <div className="twelve wide column">
+              {isMobile ? (
+                <div className="sixteen mobile wide column">
+                  {rendercategories}
+                </div>
+              ) : null}
+              <div
+                className={`${
+                  isMobile ? 'sixteen mobile' : 'twelve'
+                } wide column`}
+              >
                 <Header title="Games" />
                 <Games
                   activeCategory={activeCategory}
@@ -94,10 +126,9 @@ const Dashboard = ({ data }: DashboardType) => {
                   setIsLaunchGame={setIsLaunchGame}
                 />
               </div>
-              <div className="four wide column">
-                <Header title="Categories" />
-                <Categories setActiveCategory={setActiveCategory} />
-              </div>
+              {!isMobile ? (
+                <div className="four wide column">{rendercategories}</div>
+              ) : null}
             </div>
           </div>
         )}

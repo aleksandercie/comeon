@@ -5,7 +5,12 @@ const Player = ({ player }: Pick<AuthType, 'player'>) => {
 
   return (
     <div className="player item">
-      <img className="ui avatar image" src={avatar} alt="avatar" />
+      <img
+        className="ui avatar image"
+        src={avatar}
+        alt="avatar"
+        loading="lazy"
+      />
       <div className="content">
         <div className="header">
           <b className="name">{name}</b>
