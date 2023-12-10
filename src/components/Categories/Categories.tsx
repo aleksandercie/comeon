@@ -6,9 +6,14 @@ import {
 } from '../../feature/categoriesSlice';
 import { useEffect } from 'react';
 
-const Categories = () => {
+type CategorieType = {
+  setActiveCategory: React.Dispatch<React.SetStateAction<number>>;
+};
+
+const Categories = ({ setActiveCategory }: CategorieType) => {
   const dispatch = useAppDispatch();
   const { data: categories } = useSelector(selectCategories);
+  const handleClick = (id: number) => () => setActiveCategory(id);
 
   useEffect(() => {
     dispatch(fetchCategoriesData());
@@ -17,7 +22,7 @@ const Categories = () => {
   return (
     <div className="ui selection animated list category items">
       {categories?.map(({ id, name }) => (
-        <div className="category item" key={id}>
+        <div className="category item" key={id} onClick={handleClick(id)}>
           <div className="content">
             <div className="header">{name}</div>
           </div>

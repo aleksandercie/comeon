@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Button from '../components/Button/Button';
 import Categories from '../components/Categories/Categories';
 import Games from '../components/Games/Games';
@@ -6,59 +7,63 @@ import InputWrapper from '../components/InputWrapper/InputWrapper';
 import Layout from '../components/Layout/Layout';
 import Player from '../components/Player/Player';
 
-const Dashboard = () => (
-  <Layout>
-    <>
-      <div className="casino">
-        <div className="ui grid centered">
-          <div className="twelve wide column">
-            <div className="ui list">
-              <Player />
+const Dashboard = () => {
+  const [activeCategory, setActiveCategory] = useState(0);
+
+  return (
+    <Layout>
+      <>
+        <div className="casino">
+          <div className="ui grid centered">
+            <div className="twelve wide column">
+              <div className="ui list">
+                <Player />
+              </div>
+              <Button
+                float="left"
+                type="button"
+                icon={<i className="left chevron icon" />}
+                name="Log Out"
+                classname="logout"
+              />
             </div>
-            <Button
-              float="left"
-              type="button"
-              icon={<i className="left chevron icon" />}
-              name="Log Out"
-              classname="logout"
-            />
+            <div className="four wide column">
+              <InputWrapper required={false}>
+                <input type="text" placeholder="Search Game" />
+                <i className="search icon" />
+              </InputWrapper>
+            </div>
           </div>
-          <div className="four wide column">
-            <InputWrapper required={false}>
-              <input type="text" placeholder="Search Game" />
-              <i className="search icon" />
-            </InputWrapper>
-          </div>
-        </div>
-        <div className="ui grid">
-          <div className="twelve wide column">
-            <Header title="Games" />
-            <Games />
-          </div>
-          <div className="four wide column">
-            <Header title="Categories" />
-            <Categories />
+          <div className="ui grid">
+            <div className="twelve wide column">
+              <Header title="Games" />
+              <Games activeCategory={activeCategory} />
+            </div>
+            <div className="four wide column">
+              <Header title="Categories" />
+              <Categories setActiveCategory={setActiveCategory} />
+            </div>
           </div>
         </div>
-      </div>
-      <div className="ingame">
-        <div className="ui grid centered">
-          <div className="three wide column">
-            <Button
-              float="left"
-              type="button"
-              icon={<i className="left chevron icon" />}
-              name="Back"
-            />
+        <div className="ingame">
+          <div className="ui grid centered">
+            <div className="three wide column">
+              <Button
+                float="left"
+                type="button"
+                icon={<i className="left chevron icon" />}
+                name="Back"
+              />
+            </div>
+            <div className="ten wide column">
+              <div id="game-launch"></div>
+            </div>
+            <div className="three wide column"></div>
           </div>
-          <div className="ten wide column">
-            <div id="game-launch"></div>
-          </div>
-          <div className="three wide column"></div>
         </div>
-      </div>
-    </>
-  </Layout>
-);
+      </>
+    </Layout>
+  );
+};
 
 export default Dashboard;

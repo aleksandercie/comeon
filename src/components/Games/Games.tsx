@@ -3,10 +3,21 @@ import Button from '../Button/Button';
 import { fetchGamesData, selectGames } from '../../feature/gameSlice';
 import { useEffect } from 'react';
 import { useAppDispatch } from '../../store/store';
+import { GameType } from '../../feature/models';
 
-const Games = () => {
+type GamesType = {
+  activeCategory: number;
+};
+
+const Games = ({ activeCategory }: GamesType) => {
   const dispatch = useAppDispatch();
   const { data: games } = useSelector(selectGames);
+  const filteredGames = (games || []).reduce((acc, item) => {
+    if (item.categoryIds.includes(activeCategory)) {
+      acc.push(item);
+    }
+    return acc;
+  }, [] as GameType[]);
 
   useEffect(() => {
     dispatch(fetchGamesData());
@@ -14,7 +25,7 @@ const Games = () => {
 
   return (
     <div className="ui relaxed divided game items links">
-      {games?.map(({ name, icon, description, code }) => (
+      {filteredGames?.map(({ name, icon, description, code }) => (
         <div className="game item" key={code}>
           <div className="ui small image">
             <img src={icon} alt="game-icon" />
