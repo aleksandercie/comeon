@@ -74,6 +74,7 @@ const authSlice = createSlice({
       .addCase(loginAsync.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload;
+        state.error = null;
       })
       .addCase(loginAsync.rejected, (state, action) => {
         state.loading = false;
@@ -85,6 +86,7 @@ const authSlice = createSlice({
       .addCase(logoutAsync.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload;
+        state.error = null;
       })
       .addCase(logoutAsync.rejected, (state, action) => {
         state.loading = false;
