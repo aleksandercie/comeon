@@ -11,10 +11,12 @@ const initialState: CategoriesSliceType = {
   error: null,
 };
 
+const VITE_API_URL = import.meta.env.VITE_API_URL;
+
 export const fetchCategoriesData = createAsyncThunk(
   'user/fetchCategoriesData',
   async () => {
-    const response = await fetch('http://localhost:3001/categories', {
+    const response = await fetch(`${VITE_API_URL}/categories`, {
       method: 'get',
     });
     const jsonData = await response.json();

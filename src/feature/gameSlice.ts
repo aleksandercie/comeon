@@ -11,10 +11,12 @@ const initialState: GamesSliceType = {
   error: null,
 };
 
+const VITE_API_URL = import.meta.env.VITE_API_URL;
+
 export const fetchGamesData = createAsyncThunk(
   'user/fetchGamesData',
   async () => {
-    const response = await fetch('http://localhost:3001/games', {
+    const response = await fetch(`${VITE_API_URL}/games`, {
       method: 'get',
     });
     const jsonData = await response.json();

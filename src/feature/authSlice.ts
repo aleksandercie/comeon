@@ -11,10 +11,12 @@ const initialState: AuthSliceType = {
   error: null,
 };
 
+const VITE_API_URL = import.meta.env.VITE_API_URL;
+
 export const loginAsync = createAsyncThunk(
   'auth/login',
   async ({ username, password }: { username: string; password: string }) => {
-    const response = await fetch('http://localhost:3001/login', {
+    const response = await fetch(`${VITE_API_URL}/login`, {
       method: 'post',
       headers: {
         Accept: 'application/json',
@@ -39,7 +41,7 @@ export const loginAsync = createAsyncThunk(
 export const logoutAsync = createAsyncThunk(
   'auth/logout',
   async (username: string) => {
-    const response = await fetch('http://localhost:3001/logout', {
+    const response = await fetch(`${VITE_API_URL}/logout`, {
       method: 'post',
       headers: {
         Accept: 'application/json',

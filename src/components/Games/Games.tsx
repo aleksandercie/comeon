@@ -1,41 +1,37 @@
 import { useSelector } from 'react-redux';
-import Button from '../Button/Button';
 import { fetchGamesData, selectGames } from '../../feature/gameSlice';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useAppDispatch } from '../../store/store';
-import { GameType } from '../../feature/models';
+import GameItem from '../GameItem/GameItem';
+import { loadScript } from '../../helpers/loadScript';
+import { scriptUrls } from '../../shared/scriptUrls';
 
 type GamesType = {
   activeCategory: number;
   searchValue: string;
   setIsLaunchGame: React.Dispatch<React.SetStateAction<boolean>>;
 };
-declare global {
-  interface Window {
-    comeon: {
-      game: {
-        launch: (name: string) => void;
-      };
-    };
-  }
-}
+
+const { comeonGames } = scriptUrls;
 
 const Games = ({ activeCategory, searchValue, setIsLaunchGame }: GamesType) => {
   const dispatch = useAppDispatch();
   const { data: games, loading } = useSelector(selectGames);
-  const filteredGames = (games || []).reduce((acc, item) => {
-    if (
-      item.categoryIds.includes(activeCategory) &&
-      item.name.toLowerCase().includes(searchValue.toLowerCase())
-    ) {
-      acc.push(item);
-    }
-    return acc;
-  }, [] as GameType[]);
-  const handleClick = (code: string) => () => {
-    if (window) {
-      setIsLaunchGame(true);
+  const filteredGames = useMemo(() => {
+    return (games || []).filter(
+      (item) =>
+        item.categoryIds.includes(activeCategory) &&
+        item.name.toLowerCase().includes(searchValue.toLowerCase())
+    );
+  }, [games, activeCategory, searchValue]);
+
+  const handleClick = (code: string) => async () => {
+    setIsLaunchGame(true);
+    try {
+      await loadScript(comeonGames);
       window.comeon.game.launch(code);
+    } catch (error) {
+      console.error('Script failed to load:', error);
     }
   };
 
@@ -43,21 +39,11 @@ const Games = ({ activeCategory, searchValue, setIsLaunchGame }: GamesType) => {
     dispatch(fetchGamesData());
   }, [dispatch]);
 
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'lib/comeon.game-1.1.min.js';
-    script.async = true;
-
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
-
   if (loading) {
     return (
-      <div className="ui relaxed divided game items links">Loading...</div>
+      <div className="ui relaxed divided game items links">
+        <p>Loading games...</p>
+      </div>
     );
   }
 
@@ -65,30 +51,19 @@ const Games = ({ activeCategory, searchValue, setIsLaunchGame }: GamesType) => {
     <div className="ui relaxed divided game items links">
       {filteredGames.length > 0 ? (
         filteredGames?.map(({ name, icon, description, code }) => (
-          <div className="game item" key={code}>
-            <div className="ui small image">
-              <img src={icon} alt="game-icon" loading="lazy" />
-            </div>
-            <div className="content">
-              <div className="header">
-                <b className="name">{name}</b>
-              </div>
-              <div className="description">{description}</div>
-              <div className="extra">
-                <Button
-                  float="right"
-                  type="button"
-                  icon={<i className="right chevron icon" />}
-                  onClick={handleClick(code)}
-                  name="Play"
-                  classname="play"
-                />
-              </div>
-            </div>
-          </div>
+          <GameItem
+            name={name}
+            code={code}
+            description={description}
+            icon={icon}
+            handleClick={handleClick}
+            key={code}
+          />
         ))
       ) : (
-        <div className="description">No games found</div>
+        <div className="description">
+          <p>No games found!</p>
+        </div>
       )}
     </div>
   );

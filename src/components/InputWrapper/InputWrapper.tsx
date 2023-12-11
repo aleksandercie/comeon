@@ -1,9 +1,15 @@
+import { ReactNode } from 'react';
+
 type InputWrapperType = {
-  children: JSX.Element[];
+  children: ReactNode[];
   required: boolean;
   isMobile?: boolean;
 };
-const InputWrapper = ({ children, required, isMobile }: InputWrapperType) =>
+const InputWrapper = ({
+  children,
+  required,
+  isMobile = false,
+}: InputWrapperType) =>
   required ? (
     <div className="field required">
       <div className="ui icon input">{children}</div>

@@ -3,7 +3,7 @@ type ButtonType = {
   type: 'button';
   icon: JSX.Element;
   name: string;
-  onClick?: () => void;
+  onClick: () => void;
   classname?: string;
 };
 

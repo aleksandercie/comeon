@@ -5,8 +5,11 @@ import { loginAsync, selectAuth } from '../feature/authSlice';
 import { useAppDispatch } from '../store/store';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { links } from '../shared/links';
 
 type InputType = 'username' | 'password';
+
+const { dashboard } = links;
 
 const Homepage = () => {
   const dispatch = useAppDispatch();
@@ -27,14 +30,16 @@ const Homepage = () => {
       }));
     };
 
+  const isEmpty = loginValues.username === '' || loginValues.password === '';
+  const disabled = isEmpty || loading;
+
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await dispatch(loginAsync(loginValues));
-    navigate('/dashboard');
+    if (!isEmpty) {
+      await dispatch(loginAsync(loginValues));
+      navigate(dashboard);
+    }
   };
-
-  const disabled =
-    loginValues.username === '' || loginValues.password === '' || loading;
 
   return (
     <Layout>

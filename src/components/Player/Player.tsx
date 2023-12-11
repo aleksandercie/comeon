@@ -1,6 +1,10 @@
 import { AuthType } from '../../feature/models';
 
-const Player = ({ player }: Pick<AuthType, 'player'>) => {
+type PlayerProps = {
+  player: AuthType['player'];
+};
+
+const Player = ({ player }: PlayerProps) => {
   const { avatar, name, event } = player;
 
   return (
