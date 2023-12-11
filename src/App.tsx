@@ -6,6 +6,8 @@ import { Authorization } from './utils/Authorization';
 import { useSelector } from 'react-redux';
 import { selectAuth } from './feature/authSlice';
 import { links } from './shared/links';
+import './semantic.css';
+import './index.css';
 
 const { homepage, dashboard } = links;
 
