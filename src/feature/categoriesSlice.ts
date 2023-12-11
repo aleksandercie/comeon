@@ -1,4 +1,8 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  createAsyncThunk,
+  createSelector,
+} from '@reduxjs/toolkit';
 import { CategoriesSliceType, StateType } from './models';
 
 const initialState: CategoriesSliceType = {
@@ -34,6 +38,9 @@ export const categoriesSlice = createSlice({
   },
 });
 
-export const selectCategories = (state: StateType) => state.categories;
+export const selectCategories = createSelector(
+  [(state: StateType) => state],
+  (item) => item.categories
+);
 
 export default categoriesSlice.reducer;

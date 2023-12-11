@@ -1,4 +1,8 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  createAsyncThunk,
+  createSelector,
+} from '@reduxjs/toolkit';
 import { AuthSliceType, StateType } from './models';
 
 const initialState: AuthSliceType = {
@@ -87,6 +91,9 @@ const authSlice = createSlice({
   },
 });
 
-export const selectAuth = (state: StateType) => state.auth;
+export const selectAuth = createSelector(
+  [(state: StateType) => state],
+  (item) => item.auth
+);
 
 export default authSlice.reducer;

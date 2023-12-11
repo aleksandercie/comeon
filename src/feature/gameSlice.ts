@@ -1,4 +1,8 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  createAsyncThunk,
+  createSelector,
+} from '@reduxjs/toolkit';
 import { GamesSliceType, StateType } from './models';
 
 const initialState: GamesSliceType = {
@@ -34,6 +38,9 @@ export const gamesSlice = createSlice({
   },
 });
 
-export const selectGames = (state: StateType) => state.games;
+export const selectGames = createSelector(
+  [(state: StateType) => state],
+  (item) => item.games
+);
 
 export default gamesSlice.reducer;
