@@ -6,10 +6,12 @@ import { useAppDispatch } from '../store/store';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { links } from '../shared/links';
+import { storageNames } from '../shared/storageNames';
 
 type InputType = 'username' | 'password';
 
 const { dashboard } = links;
+const { loginStorage } = storageNames;
 
 const Homepage = () => {
   const dispatch = useAppDispatch();
@@ -37,6 +39,7 @@ const Homepage = () => {
     e.preventDefault();
     if (!isEmpty) {
       await dispatch(loginAsync(loginValues));
+      sessionStorage.setItem(loginStorage, JSON.stringify(loginValues));
       navigate(dashboard);
     }
   };
