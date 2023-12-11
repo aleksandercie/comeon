@@ -10,6 +10,7 @@ import { useAppDispatch } from '../../store/store';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { links } from '../../shared/links';
+import { storageNames } from '../../shared/storageNames';
 
 type CasionType = {
   isMobile: boolean;
@@ -17,6 +18,7 @@ type CasionType = {
 };
 
 const { homepage } = links;
+const { loginStorage } = storageNames;
 
 const Casino = ({ isMobile, setIsLaunchGame }: CasionType) => {
   const dispatch = useAppDispatch();
@@ -30,6 +32,7 @@ const Casino = ({ isMobile, setIsLaunchGame }: CasionType) => {
   const handleLogout = () => {
     if (data && data.player) {
       dispatch(logoutAsync(data.player?.login));
+      sessionStorage.removeItem(loginStorage);
       navigate(homepage);
     }
   };
