@@ -8,7 +8,7 @@ interface ProtectedRouteProps {
 const { homepage } = links;
 
 const ProtectedRoute = ({ data }: ProtectedRouteProps) => {
-  return data && data.player ? <Outlet /> : <Navigate to={homepage} />;
+  return data && data.player ? <Outlet /> : <Navigate to={homepage} replace />;
 };
 
 export default ProtectedRoute;

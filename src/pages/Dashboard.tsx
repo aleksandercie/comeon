@@ -10,17 +10,15 @@ const Dashboard = () => {
 
   return (
     <Layout>
-      <>
-        {isLaunchGame ? (
-          <InGame
-            isLaunchGame={isLaunchGame}
-            isMobile={isMobile}
-            setIsLaunchGame={setIsLaunchGame}
-          />
-        ) : (
-          <Casino isMobile={isMobile} setIsLaunchGame={setIsLaunchGame} />
-        )}
-      </>
+      {isLaunchGame ? (
+        <InGame
+          isLaunchGame={isLaunchGame}
+          isMobile={isMobile}
+          setIsLaunchGame={setIsLaunchGame}
+        />
+      ) : (
+        <Casino isMobile={isMobile} setIsLaunchGame={setIsLaunchGame} />
+      )}
     </Layout>
   );
 };

@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { fetchGamesData, selectGames } from '../../feature/gameSlice';
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useAppDispatch } from '../../store/store';
 import GameItem from '../GameItem/GameItem';
 import { loadScript } from '../../helpers/loadScript';
@@ -25,15 +25,18 @@ const Games = ({ activeCategory, searchValue, setIsLaunchGame }: GamesType) => {
     );
   }, [games, activeCategory, searchValue]);
 
-  const handleClick = (code: string) => async () => {
-    setIsLaunchGame(true);
-    try {
-      await loadScript(comeonGames);
-      window.comeon.game.launch(code);
-    } catch (error) {
-      console.error('Script failed to load:', error);
-    }
-  };
+  const handleClick = useCallback(
+    (code: string) => async () => {
+      setIsLaunchGame(true);
+      try {
+        await loadScript(comeonGames);
+        window.comeon.game.launch(code);
+      } catch (error) {
+        console.error('Script failed to load:', error);
+      }
+    },
+    [setIsLaunchGame]
+  );
 
   useEffect(() => {
     dispatch(fetchGamesData());

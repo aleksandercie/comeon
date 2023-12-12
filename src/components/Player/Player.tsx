@@ -9,15 +9,17 @@ const Player = ({ player }: PlayerProps) => {
 
   return (
     <div className="player item">
-      <img
-        className="ui avatar image"
-        src={avatar}
-        alt="avatar"
-        loading="lazy"
-      />
+      {avatar ? (
+        <img
+          className="ui avatar image"
+          src={avatar}
+          alt={`${name}'s avatar`}
+          loading="lazy"
+        />
+      ) : null}
       <div className="content">
         <div className="header">
-          <b className="name">{name}</b>
+          <strong className="name">{name}</strong>
         </div>
         <div className="description event">{event}</div>
       </div>

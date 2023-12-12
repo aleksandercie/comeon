@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useAppDispatch } from '../store/store';
 import { useNavigate } from 'react-router-dom';
 import { loginAsync } from '../feature/authSlice';
@@ -11,10 +11,13 @@ const { loginStorage } = storageNames;
 export const Authorization = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const login = async (values: { username: string; password: string }) => {
-    await dispatch(loginAsync(values));
-    navigate(dashboard);
-  };
+  const login = useCallback(
+    async (values: { username: string; password: string }) => {
+      await dispatch(loginAsync(values));
+      navigate(dashboard);
+    },
+    [dispatch, navigate, dashboard]
+  );
   useEffect(() => {
     const localTokens = sessionStorage.getItem(loginStorage);
     if (localTokens) {

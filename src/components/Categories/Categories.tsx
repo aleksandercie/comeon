@@ -25,7 +25,12 @@ const Categories = ({ setActiveCategory }: CategorieType) => {
       <Header title="Categories" />
       <div className="ui selection animated list category items">
         {categories?.map(({ id, name }) => (
-          <button className="category item" key={id} onClick={handleClick(id)}>
+          <button
+            className="category item"
+            key={id}
+            onClick={handleClick(id)}
+            aria-label={name}
+          >
             <div className="content leftAligned">
               <div className="header">{name}</div>
             </div>

@@ -4,12 +4,12 @@ type LayoutType = {
 
 const Layout = ({ children }: LayoutType) => (
   <>
-    <div className="ui one column center aligned page grid">
+    <header className="ui one column center aligned page grid">
       <div className="column twelve wide">
-        <img src="images/logo.svg" alt="logo" />
+        <img src="images/logo.svg" alt="logo" loading="lazy" />
       </div>
-    </div>
-    <div className="main container">{children}</div>
+    </header>
+    <main className="main container">{children}</main>
   </>
 );
 

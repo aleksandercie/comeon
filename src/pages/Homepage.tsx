@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import InputWrapper from '../components/InputWrapper/InputWrapper';
 import Layout from '../components/Layout/Layout';
 import { loginAsync, selectAuth } from '../feature/authSlice';
@@ -7,8 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { links } from '../shared/links';
 import { storageNames } from '../shared/storageNames';
-
-type InputType = 'username' | 'password';
+import useFormData from '../hooks/useFormData';
 
 const { dashboard } = links;
 const { loginStorage } = storageNames;
@@ -18,19 +16,10 @@ const Homepage = () => {
   const navigate = useNavigate();
   const { error, loading } = useSelector(selectAuth);
 
-  const [loginValues, setLoginValues] = useState({
+  const [loginValues, handleChange] = useFormData({
     username: '',
     password: '',
   });
-
-  const handleChange =
-    (type: InputType) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { value } = e.target;
-      setLoginValues((prev) => ({
-        ...prev,
-        [type]: value,
-      }));
-    };
 
   const isEmpty = loginValues.username === '' || loginValues.password === '';
   const disabled = isEmpty || loading;
